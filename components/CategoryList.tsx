@@ -39,7 +39,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ categoryList }) => {
                 </Text>
               </View>
               <View>
-                <Text style={styles.totalAmountText}>$500</Text>
+                <Text style={styles.totalAmountText}>{category.assigned_budget}</Text>
               </View>
             </View>
           </TouchableOpacity>
