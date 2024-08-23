@@ -34,9 +34,9 @@ export default function Header() {
       />
       <View style={{display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'space-between', width:'85%'}} >
         <View>
-          <Text style={{ color: colors.WHITE, fontSize: 17 }}>Welcome</Text>
+          <Text style={{ color: colors.WHITE, fontSize: 17,fontFamily:'outfit' }}>Welcome</Text>
           <Text
-            style={{ color: colors.WHITE, fontSize: 20, fontWeight: "bold" }}
+            style={{ color: colors.WHITE, fontSize: 20, fontFamily:'outfit-bold' }}
           >
             Aditya Mane
           </Text>
