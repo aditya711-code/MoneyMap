@@ -1,10 +1,11 @@
-import { View, Text,StyleSheet } from 'react-native'
+import { View, Text,StyleSheet, TouchableOpacity, Alert, ToastAndroid } from 'react-native'
 import React from 'react'
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { CategoryData } from '@/app/category-details';
 import colors from '@/utils/colors';
 import { useState,useEffect} from 'react';
 import { useRouter } from 'expo-router';
+import { supabase } from '@/utils/SupaBaseConfig';
 interface CategoryInfoProps {
   categoryData: CategoryData | undefined;
 }
@@ -12,7 +13,28 @@ export default function CategoryInfo({ categoryData }: CategoryInfoProps) {
  
   const[totalCost,setTotalCost]=useState<number|undefined>();
   const[percTotal,setPercTotal]=useState<number|undefined>();
+  const router=useRouter();
   
+  const onDeleteCategory=async()=>{
+    Alert.alert('Are you sure','Do you really want to delete',[
+      {
+      text:'Cancel',
+      style:'cancel'
+      },
+      {
+        text:'Yes',
+        style:'destructive',
+        onPress:async()=>{
+          //delete categoryItems
+           const{error:deleteCategoryItem}=await supabase.from('CategoryItems').delete().eq('category_id',categoryData?.id);
+
+           const{error:deleteCategory}=await supabase.from('Category').delete().eq('id',categoryData?.id);
+          ToastAndroid.show('Category Deleted',ToastAndroid.SHORT)
+           router.replace('/(tabs)')
+        }
+      }
+  ])
+  }
   useEffect(()=>{
     calculateTotalPercentage();
   },[categoryData])
@@ -22,9 +44,10 @@ export default function CategoryInfo({ categoryData }: CategoryInfoProps) {
       total=total+items.cost;
     })
     setTotalCost(total);
-    console.log("total",total)
-    const perc=(total/(categoryData?.assigned_budget??1))*100;
-    console.log("perc",perc)
+    let perc=(total/(categoryData?.assigned_budget??1))*100;
+    if(perc>100){
+      perc=100;
+    } 
     setPercTotal(perc);
    }
   return (
@@ -43,12 +66,14 @@ export default function CategoryInfo({ categoryData }: CategoryInfoProps) {
             {categoryData?.CategoryItems?.length ?? 0} Item
           </Text>
         </View>
-        <Ionicons name='trash' size={24} color='red' />
+        <TouchableOpacity onPress={()=>onDeleteCategory()}>
+          <Ionicons name='trash' size={24} color='red' />
+        </TouchableOpacity>
       </View>
       <View style={styles.amountContainer}>
-        <Text style={{ fontFamily: "outift-bold" }}>{totalCost}</Text>
+        <Text style={{ fontFamily: "outift-bold" }}>${totalCost}</Text>
         <Text style={{ fontFamily: "outift" }}>
-          Total Budget:{categoryData?.assigned_budget}
+          Total Budget:${categoryData?.assigned_budget}
         </Text>
       </View>
       <View style={styles.progressBarContainer}>

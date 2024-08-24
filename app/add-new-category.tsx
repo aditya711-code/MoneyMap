@@ -6,15 +6,19 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { TouchableOpacity } from 'react-native';
 import { supabase } from '@/utils/SupaBaseConfig';
+import { ActivityIndicator } from 'react-native';
+import { useRouter } from 'expo-router';
 export default function AddNewCategory() {
 
   const[selectedIcon,setSelectedIcon]=useState();
   const[selectedColor,setSelectedColor]=useState(colors.PRIMARY);
   const[categoryName,setSelectedCategoryName]=useState("");
   const[totalBudget,setTotalBudget]=useState(0);
+  const [loading, setLoading] = useState(false);
+  const router=useRouter();
 
   const onCreateCategory=async()=>{
-    console.log("Entry",categoryName,totalBudget,selectedColor,selectedIcon);
+    setLoading(true);
     const {data,error}=await supabase.from('Category').
     insert([{
       name:categoryName,
@@ -25,13 +29,27 @@ export default function AddNewCategory() {
     }]).select()
     console.log("data", data);
     if(data){
+      router.replace({
+        pathname:"/category-details",
+        params:{
+          categoryId:data[0].id
+        }
+      })
       ToastAndroid.show("Category Created",ToastAndroid.SHORT)
-
-      
     }
+    setLoading(false);
+   
+    
   }
   return (
-    <View style={{ marginTop: 20, padding: 20 }}>
+    <View style={{ marginTop: 20, padding: 20 ,opacity:loading?0.3:1}}>
+      {loading && (
+        <ActivityIndicator
+          color={colors.PRIMARY}
+          size={54}
+          style={styles.loading}
+        />
+      )}
       <View
         style={{
           justifyContent: "center",
@@ -41,7 +59,7 @@ export default function AddNewCategory() {
         <TextInput
           style={[styles.iconInput, { backgroundColor: selectedColor }]}
           maxLength={2}
-          onChangeText={(v:any)=>setSelectedIcon(v)}
+          onChangeText={(v: any) => setSelectedIcon(v)}
         >
           {selectedIcon}
         </TextInput>
@@ -64,14 +82,13 @@ export default function AddNewCategory() {
           placeholder='Total Budget'
           style={{ width: "100%", fontSize: 20, fontFamily: "outfit-medium" }}
           keyboardType='numeric'
-          onChangeText={(v:any) => setTotalBudget(v)}
+          onChangeText={(v: any) => setTotalBudget(v)}
         />
       </View>
       <TouchableOpacity
         style={styles.button}
         onPress={() => onCreateCategory()}
         disabled={!categoryName || !totalBudget}
-     
       >
         <Text
           style={{
@@ -105,15 +122,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#808080",
     backgroundColor: colors.WHITE,
-    alignItems:'center',
-    marginTop:10,
+    alignItems: "center",
+    marginTop: 10,
   },
-  button:{
-    backgroundColor:colors.PRIMARY,
-    padding:15,
-    borderRadius:9,
-    marginTop:10,
-
-  
+  button: {
+    backgroundColor: colors.PRIMARY,
+    padding: 15,
+    borderRadius: 9,
+    marginTop: 10,
+  },
+  loading: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: "center",
+    justifyContent: "center",
   }
 });

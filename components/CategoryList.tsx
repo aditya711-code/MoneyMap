@@ -6,7 +6,8 @@ import { useRouter } from 'expo-router';
 interface CategoryListProps {
   categoryList: CategoryType[] | undefined;
 }
-const CategoryList: React.FC<CategoryListProps> = ({ categoryList }) => {
+
+const CategoryList = ({ categoryList }:CategoryListProps) => {
   const router=useRouter();
   const onCategoryClick=(category:CategoryType)=>{
     router.push({
@@ -16,10 +17,18 @@ const CategoryList: React.FC<CategoryListProps> = ({ categoryList }) => {
       }
   })
   }
+
+  const calculateTotalCost=(CategoryItems:CategoryType['CategoryItems'])=>{
+    let totalCost=0;
+    CategoryItems.forEach((item=>{
+      totalCost=totalCost+item.cost
+    }))
+    return totalCost;
+  }
   return (
     <View style={{ marginTop: 25 }}>
-      <Text style={{ fontFamily: "outfit-bold", fontSize: 25 }}>
-        Lates Money Expenses:
+      <Text style={{ fontFamily: "outfit-bold", fontSize: 22 }}>
+        Latest Money Expenses:
       </Text>
       <View>
         {categoryList?.map((category, index) => (
@@ -39,7 +48,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ categoryList }) => {
                 </Text>
               </View>
               <View>
-                <Text style={styles.totalAmountText}>{category.assigned_budget}</Text>
+                <Text style={styles.totalAmountText}>${calculateTotalCost(category.CategoryItems)}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -57,7 +66,7 @@ const styles=StyleSheet.create({
     gap:10,
     alignItems:'center',
     backgroundColor:colors.WHITE,
-    padding:10,
+    padding:20,
     borderRadius:15
   },
   iconContainer:{

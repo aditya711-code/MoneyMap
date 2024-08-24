@@ -9,7 +9,16 @@ import CircularChart from "@/components/CircularChart";
 import Entypo from "@expo/vector-icons/Entypo";
 import { Link } from "expo-router";
 import CategoryList from "@/components/CategoryList";
-
+interface CategoryItems {
+  id: string;
+  name: string;
+  cost: number;
+  category_id:number,
+  url:string,
+  note:string,
+  color:string
+  // Add other properties if necessary
+}
 export interface CategoryType {
   assigned_budget: number;
   color: string;
@@ -18,7 +27,7 @@ export interface CategoryType {
   icon: string;
   id: number;
   name: string;
-  CategoryItems: [];
+  CategoryItems: CategoryItems[];
 }
 export default function Home() {
 
@@ -74,7 +83,7 @@ export default function Home() {
           padding:20,
           marginTop:-75
         }}>
-          <CircularChart />
+          <CircularChart categoryList={categoryList} />
           <CategoryList categoryList={categoryList} />
         </View>
       </ScrollView>
