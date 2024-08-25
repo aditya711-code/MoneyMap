@@ -17,11 +17,12 @@ export default function CircularChart({categoryList}:CategoryListProps) {
      useEffect(() => {
        categoryList&&updateCircularChart();
      }, [categoryList]);
+
     const updateCircularChart=()=>{
       let totalEstimates=0;
       let otherTotalCost=0;
-       setSliceColor([]);
-       setValues([]); 
+      let updatedSliceColor = [];
+      let updatedValues = [];
       categoryList?.forEach((item,index)=>{
          if(index<4){
           let itemTotalCost = 0;
@@ -29,8 +30,8 @@ export default function CircularChart({categoryList}:CategoryListProps) {
             itemTotalCost=itemTotalCost+item_.cost;
             totalEstimates=totalEstimates+item_.cost;
           })
-          setSliceColor(sliceColor=>[...sliceColor,colors.COLOR_LIST[index]])
-          setValues(values=>[...values,itemTotalCost])
+          updatedSliceColor.push(colors.COLOR_LIST[index])
+         updatedValues.push(itemTotalCost)
           }else{
              item.CategoryItems.forEach((item_)=>{
               otherTotalCost=otherTotalCost+item_.cost;
@@ -38,8 +39,19 @@ export default function CircularChart({categoryList}:CategoryListProps) {
             })
           }
       })
-      setSliceColor((sliceColor) => [...sliceColor, colors.COLOR_LIST[4]]);
-      setValues((values) => [...values, otherTotalCost]);
+      if (otherTotalCost > 0) {
+        updatedSliceColor.push(colors.COLOR_LIST[4]);
+        updatedValues.push(otherTotalCost);
+      }
+
+       if (totalEstimates === 0) {
+         updatedSliceColor = [colors.GREY];
+         updatedValues = [1]; // Dummy value to avoid the error.
+       }
+
+      setSliceColor(updatedSliceColor);
+      setValues(updatedValues);
+      setTotalExpenses(totalEstimates);
       setTotalExpenses(totalEstimates)
     }
 
