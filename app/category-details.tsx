@@ -37,27 +37,24 @@ export default function CategoryDetails() {
     }
   return (
     <View style={{ padding: 20, marginTop: 20, flex: 1 }}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <TouchableOpacity onPress={() => router.replace("/(tabs)")}>
-          <Ionicons name='arrow-back-sharp' size={24} color='black' />
-        </TouchableOpacity>
-
-        {categoryData ? (
-          <>
-            <CategoryInfo categoryData={categoryData} />
-            <CategoryItemList
-              categoryData={categoryData}
-              setUpdateRecord={() => getCategoryDetails()}
-            />
-          </>
-        ) : (
-          <ActivityIndicator
-            color={colors.PRIMARY}
-            size={54}
-            style={styles.loading}
+      {categoryData ? (
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <TouchableOpacity onPress={() => router.replace("/(tabs)")}>
+            <Ionicons name='arrow-back-sharp' size={24} color='black' />
+          </TouchableOpacity>
+          <CategoryInfo categoryData={categoryData} />
+          <CategoryItemList
+            categoryData={categoryData}
+            setUpdateRecord={() => getCategoryDetails()}
           />
-        )}
-      </ScrollView>
+        </ScrollView>
+      ) : (
+        <ActivityIndicator
+          color={colors.PRIMARY}
+          size={54}
+          style={styles.loading}
+        />
+      )}
       <Link
         href={{
           pathname: "/add-new-category-item",

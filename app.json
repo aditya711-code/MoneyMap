@@ -4,11 +4,11 @@
     "slug": "MoneyMap",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/MoneyMap.png",
+    "icon": "./assets/images/moneymap.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/MoneyMap.png",
+      "image": "./assets/images/moneymap.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

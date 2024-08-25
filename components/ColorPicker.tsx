@@ -1,6 +1,6 @@
 import {TouchableOpacity ,View} from 'react-native'
 import React from 'react'
-import { Colors } from '@/constants/Colors'
+import colors from '@/utils/colors';
 export default function ColorPicker({
   selectedColor,
   setSelectedColor,
@@ -12,7 +12,7 @@ export default function ColorPicker({
     <View
       style={{ display: "flex", flexDirection: "row", gap: 20, marginTop: 20 }}
     >
-      {Colors.COLOR_LIST.map((color, index) => (
+      {colors.COLOR_LIST.map((color, index) => (
         <TouchableOpacity
           key={index}
           style={[

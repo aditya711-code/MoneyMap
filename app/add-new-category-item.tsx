@@ -1,5 +1,4 @@
 import { View, Text,Image,StyleSheet, TextInput, TouchableOpacity, ScrollView, KeyboardAvoidingView, ToastAndroid, ActivityIndicator } from 'react-native'
-import React from 'react'
 import { useState } from 'react'
 import colors from '@/utils/colors';
 import AntDesign from "@expo/vector-icons/AntDesign";

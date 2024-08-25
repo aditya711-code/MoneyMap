@@ -48,7 +48,7 @@ const CategoryList = ({ categoryList }:CategoryListProps) => {
                 </Text>
               </View>
               <View>
-                <Text style={styles.totalAmountText}>${calculateTotalCost(category.CategoryItems)}</Text>
+                <Text style={styles.totalAmountText}>₹{calculateTotalCost(category.CategoryItems)}</Text>
               </View>
             </View>
           </TouchableOpacity>

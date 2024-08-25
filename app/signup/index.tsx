@@ -6,27 +6,24 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import  { useState } from "react";
+import { useState } from "react";
 import colors from "@/utils/colors";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
 import { useRouter } from "expo-router";
-
-const LoginScreen = () => {
+const SignupScreen = () => {
   const navigation = useNavigation();
   const [secureEntery, setSecureEntery] = useState(true);
   const router=useRouter();
 
-  const handleLogIn=()=>{
-    router.replace('/(tabs)')
-  }
   const handleGoBack = () => {
     router.replace('/')
   };
-  const handleSignup = () => {
-    router.replace('/signup')
+
+  const handleLogin = () => {
+    router.replace('/login')
   };
 
   return (
@@ -39,9 +36,8 @@ const LoginScreen = () => {
         />
       </TouchableOpacity>
       <View style={styles.textContainer}>
-        <Text style={styles.headingText}>Hey,</Text>
-        <Text style={styles.headingText}>Welcome</Text>
-        <Text style={styles.headingText}>Back</Text>
+        <Text style={styles.headingText}>Let's get</Text>
+        <Text style={styles.headingText}>started</Text>
       </View>
       {/* form  */}
       <View style={styles.formContainer}>
@@ -70,17 +66,28 @@ const LoginScreen = () => {
             <SimpleLineIcons name={"eye"} size={20} color={colors.DARKGREY} />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity>
-          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+        <View style={styles.inputContainer}>
+          <SimpleLineIcons
+            name={"screen-smartphone"}
+            size={30}
+            color={colors.DARKGREY}
+          />
+          <TextInput
+            style={styles.textInput}
+            placeholder='Enter your phone no'
+            placeholderTextColor={colors.DARKGREY}
+            secureTextEntry={secureEntery}
+            keyboardType='phone-pad'
+          />
+        </View>
+
+        <TouchableOpacity style={styles.loginButtonWrapper}>
+          <Text style={styles.loginText}>Sign up</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginButtonWrapper} onPress={handleLogIn}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableOpacity>
-        <Text style={styles.continueText}>or continue with</Text>
         <View style={styles.footerContainer}>
-          <Text style={styles.accountText}>Don’t have an account?</Text>
-          <TouchableOpacity onPress={handleSignup}>
-            <Text style={styles.signupText}>Sign up</Text>
+          <Text style={styles.accountText}>Already have an account!</Text>
+          <TouchableOpacity onPress={handleLogin}>
+            <Text style={styles.signupText}>Login</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -88,7 +95,7 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -117,7 +124,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     borderWidth: 1,
-    borderColor: colors.GREY,
+    borderColor: colors.DARKGREY,
     borderRadius: 100,
     paddingHorizontal: 20,
     flexDirection: "row",
@@ -127,13 +134,13 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    padding: 10,
+    padding:10,
     fontFamily: 'outfit',
     fontSize:18
   },
   forgotPasswordText: {
     textAlign: "right",
-    color: colors.GREY,
+    color: colors.PRIMARY,
     fontFamily: 'outfit-medium',
     marginVertical: 10,
   },
@@ -143,9 +150,10 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   loginText: {
-    color: colors.WHITE,
+    color: colors.WHITE
+,
     fontSize: 20,
-    fontFamily: 'outfit-bold',
+    fontFamily: 'outfit-medium',
     textAlign: "center",
     padding: 10,
   },
@@ -153,10 +161,27 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 20,
     fontSize: 14,
-    fontFamily: 'outfit-medium',
-    color: colors.WHITE,
+    fontFamily: 'outfit',
+    color: colors.PRIMARY,
   },
- 
+  googleButtonContainer: {
+    flexDirection: "row",
+    borderWidth: 2,
+    borderColor: colors.PRIMARY,
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+    gap: 10,
+  },
+  googleImage: {
+    height: 20,
+    width: 20,
+  },
+  googleText: {
+    fontSize: 20,
+    fontFamily: 'outfit-medium',
+  },
   footerContainer: {
     flexDirection: "row",
     justifyContent: "center",
@@ -166,10 +191,10 @@ const styles = StyleSheet.create({
   },
   accountText: {
     color: colors.PRIMARY,
-    fontFamily:'outfit',
+    fontFamily: 'outfit',
   },
   signupText: {
     color: colors.PRIMARY,
-    fontFamily:'outfit-bold',
+    fontFamily: 'outfit-bold',
   },
 });

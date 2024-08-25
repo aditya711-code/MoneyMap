@@ -8,19 +8,28 @@ export default function RootLayout() {
     "outfit-medium": require("@/assets/fonts/Outfit-Medium.ttf"),
     "outfit-bold": require("@/assets/fonts/Outfit-Bold.ttf"),
   });
+
   return (
     <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name='/login' options={{ headerShown: true }} />
+      <Stack.Screen name='/signup' options={{ headerShown: true }} />
       <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-      <Stack.Screen name='add-new-category'
+      <Stack.Screen
+        name='add-new-category'
         options={{
           presentation: "modal",
           headerShown: true,
           title: "Add New Category",
         }}
       />
-      <Stack.Screen name='add-new-category-item'
-      options={{presentation:'modal',headerShown:true,title:'Add New Item'}}/>
-   
+      <Stack.Screen
+        name='add-new-category-item'
+        options={{
+          presentation: "modal",
+          headerShown: true,
+          title: "Add New Item",
+        }}
+      />
     </Stack>
   );
 }

@@ -42,11 +42,11 @@ export default function Home() {
   },[])
   const checkUserAuth= async ()=>{
     const result=await services.getData('login');
-    console.log("Result",result)
-    // if(result!=='true'){
-    //   router.push('/login')
+    //console.log("Result",result)
+    if(result!=='true'){
+      router.push('/login')
   
-    // }
+    }
 
   }
 
