@@ -36,8 +36,8 @@ export default function CategoryItemList({categoryData,setUpdateRecord}:Category
       <View style={{ marginTop: 15 }}>
         {categoryData?.CategoryItems?.length ?? 0 > 0 ? (
           categoryData?.CategoryItems?.map((item, index) => (
-            <>
-              <TouchableOpacity onPress={() => setExpandItem(index)}>
+            <View key={index}>
+              <TouchableOpacity onPress={() => setExpandItem(index)} >
                 <View key={item.category_id} style={styles.itemContainer}>
                   <Image source={{ uri: item.image }} style={styles.image} />
                   <View style={{ flex: 1, marginLeft: 10 }}>
@@ -75,7 +75,7 @@ export default function CategoryItemList({categoryData,setUpdateRecord}:Category
                   }}
                 ></View>
               )}
-            </>
+            </View>
           ))
         ) : (
           <Text style={styles.noItemText}>Items Not Found </Text>
