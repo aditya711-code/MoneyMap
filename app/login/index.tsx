@@ -1,5 +1,5 @@
 import {
-  Image,
+  Alert,
   StyleSheet,
   Text,
   TextInput,
@@ -13,13 +13,21 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { useNavigation } from "@react-navigation/native";
 import { useRouter } from "expo-router";
-
+import { supabase } from "@/utils/SupaBaseConfig";
 const LoginScreen = () => {
   const navigation = useNavigation();
   const [secureEntery, setSecureEntery] = useState(true);
+  const[email,setEmail]=useState('');
+  const[password,setPassword]=useState('');
   const router=useRouter();
 
-  const handleLogIn=()=>{
+  const handleLogIn=async()=>{
+    const { error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    })
+
+    if (error) Alert.alert(error.message);
     router.replace('/(tabs)')
   }
   const handleGoBack = () => {
@@ -52,6 +60,7 @@ const LoginScreen = () => {
             placeholder='Enter your email'
             placeholderTextColor={colors.DARKGREY}
             keyboardType='email-address'
+            onChangeText={(v)=>setEmail(v)}
           />
         </View>
         <View style={styles.inputContainer}>
@@ -61,6 +70,7 @@ const LoginScreen = () => {
             placeholder='Enter your password'
             placeholderTextColor={colors.DARKGREY}
             secureTextEntry={secureEntery}
+            onChangeText={(v)=>setPassword(v)}
           />
           <TouchableOpacity
             onPress={() => {

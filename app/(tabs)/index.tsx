@@ -9,6 +9,7 @@ import CircularChart from "@/components/CircularChart";
 import Entypo from "@expo/vector-icons/Entypo";
 import { Link } from "expo-router";
 import CategoryList from "@/components/CategoryList";
+import { Session } from "@supabase/supabase-js";
 interface CategoryItems {
   id: string;
   name: string;
@@ -32,31 +33,36 @@ export interface CategoryType {
 export default function Home() {
 
   const router=useRouter();
+  const [session, setSession] = useState<Session | null>(null);
   const [categoryList, setCategoryList] = useState<CategoryType[] | undefined>(
     undefined
   );
-  const[loading,setLoading]=useState(false)
-  useEffect(()=>{
-    checkUserAuth();
-    getCategoryList();
-  },[])
-  const checkUserAuth= async ()=>{
-    const result=await services.getData('login');
-    //console.log("Result",result)
-    if(result!=='true'){
-      router.push('/login')
-  
-    }
+  const[loading,setLoading]=useState(false);
 
-  }
+   useEffect(() => {
+     supabase.auth.getSession().then(({ data: { session } }) => {
+       setSession(session);
+     });
+
+     supabase.auth.onAuthStateChange((_event, session) => {
+       setSession(session);
+     });
+   }, []);
+  useEffect(()=>{
+   
+    session && getCategoryList();
+  },[session])
+ 
 
   const getCategoryList=async()=>{
     setLoading(true)
-    const{ data,error } = await supabase.from("Category").select("*,CategoryItems(*)").eq('created_by','adityamane711@gmail.com');
+    console.log("session",session?.user.email)
+    const{ data,error } = await supabase.from("Category").select("*,CategoryItems(*)").eq('created_by',session?.user.email);
     setCategoryList(data?? undefined)
     data && setLoading(false)
           
   }
+  
   return (
     <View
       style={{

@@ -1,5 +1,5 @@
 import { View, Text ,StyleSheet,Animated} from 'react-native'
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import PieChart from 'react-native-pie-chart'
 import colors from '@/utils/colors';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -50,7 +50,7 @@ export default function CircularChart({categoryList}:CategoryListProps) {
         Total Expense: <Text style={{ fontFamily: "outfit-bold" }}>₹{totalExpenses}</Text>
       </Text>
       <View style={styles.subContainer}>
-        {sliceColor.length>0 && values.length>0 &&
+        {sliceColor?.length>0 && values?.length>0 &&
         <PieChart
           widthAndHeight={widthAndHeight}
           series={values}

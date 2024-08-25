@@ -1,28 +1,13 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
 import colors from "@/utils/colors";
-import { client } from "@/utils/KindeConfig";
-import services from "@/utils/services";
 import { useRouter } from "expo-router";
-
-export default function LoginScreen() {
+export default function WelcomeScren() {
   const router = useRouter();
+   
   const handleSignIn = async () => {
-    // const token = await client.login();
-    // if (token) {
-    //   // User was authenticated
-    //   await services.storeData('login','true');
-    //   router.replace('/')
-    // }
     router.replace("/login");
   };
   const handleSignUp = async () => {
-    // const token = await client.login();
-    // if (token) {
-    //   // User was authenticated
-    //   await services.storeData('login','true');
-    //   router.replace('/')
-    // }
     router.replace("/signup");
   };
   return (
