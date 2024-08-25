@@ -1,5 +1,4 @@
 import { View, Text,StyleSheet, TouchableOpacity, Alert, ToastAndroid } from 'react-native'
-import React from 'react'
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { CategoryData } from '@/app/category-details';
 import colors from '@/utils/colors';
@@ -71,9 +70,9 @@ export default function CategoryInfo({ categoryData }: CategoryInfoProps) {
         </TouchableOpacity>
       </View>
       <View style={styles.amountContainer}>
-        <Text style={{ fontFamily: "outift-bold" }}>${totalCost}</Text>
+        <Text style={{ fontFamily: "outift-bold" }}>₹{totalCost}</Text>
         <Text style={{ fontFamily: "outift" }}>
-          Total Budget:${categoryData?.assigned_budget}
+          Total Budget:₹{categoryData?.assigned_budget}
         </Text>
       </View>
       <View style={styles.progressBarContainer}>

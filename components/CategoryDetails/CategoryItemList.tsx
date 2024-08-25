@@ -44,7 +44,7 @@ export default function CategoryItemList({categoryData,setUpdateRecord}:Category
                     <Text style={styles.name}>{item.name}</Text>
                     <Text style={styles.url}>{item.note}</Text>
                   </View>
-                  <Text style={styles.cost}>{item.cost}</Text>
+                  <Text style={styles.cost}>₹{item.cost}</Text>
                 </View>
               </TouchableOpacity>
               {expandItem == index && (

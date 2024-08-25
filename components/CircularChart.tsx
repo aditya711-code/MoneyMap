@@ -14,11 +14,14 @@ export default function CircularChart({categoryList}:CategoryListProps) {
     const[ sliceColor,setSliceColor] = useState([colors.GREY]);
     const[totalExpenses,setTotalExpenses]=useState(0);
     
+     useEffect(() => {
+       categoryList&&updateCircularChart();
+     }, [categoryList]);
     const updateCircularChart=()=>{
       let totalEstimates=0;
       let otherTotalCost=0;
-      //  setSliceColor([]);
-      //  setValues([]);
+       setSliceColor([]);
+       setValues([]); 
       categoryList?.forEach((item,index)=>{
          if(index<4){
           let itemTotalCost = 0;
@@ -40,13 +43,11 @@ export default function CircularChart({categoryList}:CategoryListProps) {
       setTotalExpenses(totalEstimates)
     }
 
-    useEffect(()=>{
-         updateCircularChart();
-    },[])
+   
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 18, fontFamily: "outfit-bold" }}>
-        Total Expense: <Text style={{ fontFamily: "outfit-bold" }}>${totalExpenses}</Text>
+        Total Expense: <Text style={{ fontFamily: "outfit-bold" }}>₹{totalExpenses}</Text>
       </Text>
       <View style={styles.subContainer}>
         {sliceColor.length>0 && values.length>0 &&
